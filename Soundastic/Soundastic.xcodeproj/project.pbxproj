@@ -3,17 +3,18 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		E85C2B362C0B6F26009BD34C /* SoundasticApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85C2B352C0B6F26009BD34C /* SoundasticApp.swift */; };
-		E85C2B382C0B6F26009BD34C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85C2B372C0B6F26009BD34C /* ContentView.swift */; };
 		E85C2B3A2C0B6F28009BD34C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E85C2B392C0B6F28009BD34C /* Assets.xcassets */; };
 		E85C2B3D2C0B6F28009BD34C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E85C2B3C2C0B6F28009BD34C /* Preview Assets.xcassets */; };
 		E85C2B472C0B6F28009BD34C /* SoundasticTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85C2B462C0B6F28009BD34C /* SoundasticTests.swift */; };
 		E85C2B512C0B6F28009BD34C /* SoundasticUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85C2B502C0B6F28009BD34C /* SoundasticUITests.swift */; };
 		E85C2B532C0B6F28009BD34C /* SoundasticUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E85C2B522C0B6F28009BD34C /* SoundasticUITestsLaunchTests.swift */; };
+		E85C2B702C0B76FA009BD34C /* Theme in Frameworks */ = {isa = PBXBuildFile; productRef = E85C2B6F2C0B76FA009BD34C /* Theme */; };
+		E85C2B752C0B7E35009BD34C /* App in Frameworks */ = {isa = PBXBuildFile; productRef = E85C2B742C0B7E35009BD34C /* App */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +37,6 @@
 /* Begin PBXFileReference section */
 		E85C2B322C0B6F26009BD34C /* Soundastic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Soundastic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E85C2B352C0B6F26009BD34C /* SoundasticApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundasticApp.swift; sourceTree = "<group>"; };
-		E85C2B372C0B6F26009BD34C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E85C2B392C0B6F28009BD34C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E85C2B3C2C0B6F28009BD34C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E85C2B422C0B6F28009BD34C /* SoundasticTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundasticTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +44,8 @@
 		E85C2B4C2C0B6F28009BD34C /* SoundasticUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SoundasticUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E85C2B502C0B6F28009BD34C /* SoundasticUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundasticUITests.swift; sourceTree = "<group>"; };
 		E85C2B522C0B6F28009BD34C /* SoundasticUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundasticUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E85C2B6D2C0B76AE009BD34C /* Theme */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Theme; sourceTree = "<group>"; };
+		E85C2B722C0B7D41009BD34C /* App */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = App; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E85C2B752C0B7E35009BD34C /* App in Frameworks */,
+				E85C2B702C0B76FA009BD34C /* Theme in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,8 +98,9 @@
 		E85C2B342C0B6F26009BD34C /* Soundastic */ = {
 			isa = PBXGroup;
 			children = (
+				E85C2B722C0B7D41009BD34C /* App */,
+				E85C2B6D2C0B76AE009BD34C /* Theme */,
 				E85C2B352C0B6F26009BD34C /* SoundasticApp.swift */,
-				E85C2B372C0B6F26009BD34C /* ContentView.swift */,
 				E85C2B392C0B6F28009BD34C /* Assets.xcassets */,
 				E85C2B3B2C0B6F28009BD34C /* Preview Content */,
 			);
@@ -143,6 +148,10 @@
 			dependencies = (
 			);
 			name = Soundastic;
+			packageProductDependencies = (
+				E85C2B6F2C0B76FA009BD34C /* Theme */,
+				E85C2B742C0B7E35009BD34C /* App */,
+			);
 			productName = Soundastic;
 			productReference = E85C2B322C0B6F26009BD34C /* Soundastic.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +224,9 @@
 				Base,
 			);
 			mainGroup = E85C2B292C0B6F26009BD34C;
+			packageReferences = (
+				E85C2B732C0B7E35009BD34C /* XCLocalSwiftPackageReference "Soundastic/App" */,
+			);
 			productRefGroup = E85C2B332C0B6F26009BD34C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -257,7 +269,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E85C2B382C0B6F26009BD34C /* ContentView.swift in Sources */,
 				E85C2B362C0B6F26009BD34C /* SoundasticApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +599,24 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		E85C2B732C0B7E35009BD34C /* XCLocalSwiftPackageReference "Soundastic/App" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Soundastic/App;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E85C2B6F2C0B76FA009BD34C /* Theme */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Theme;
+		};
+		E85C2B742C0B7E35009BD34C /* App */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = App;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E85C2B2A2C0B6F26009BD34C /* Project object */;
 }
