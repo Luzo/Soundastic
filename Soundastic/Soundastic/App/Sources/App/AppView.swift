@@ -1,31 +1,35 @@
-//
-//  ContentView.swift
-//  Soundastic
-//
-//  Created by Lubos Lehota on 01/06/2024.
-//
-
 import Components
+import Home
+import Login
+import Resolver
 import SwiftUI
 import Theme
 
-public struct AppView: View {
-  public init() {
-  }
+public struct AppView<Reducer: AppReducerDefinition>: View {
+  @InjectedObject var appReducer: Reducer
+
+  public init() {}
 
   public var body: some View {
-    VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(Color.blue)
-      Text("Hello, world!")
-      StylableButton()
+    NavigationStack {
+      ProgressView()
+        .navigationDestination(
+          isPresented: .constant(appReducer.state.isLoggedIn)
+        ) {
+          if appReducer.state.isLoggedIn {
+            HomeView<HomeReducer>()
+          } else {
+            LoginView<LoginReducer>()
+          }
+        }
+
+      Button("checkLogin") {
+        appReducer.checkLogin()
+      }
     }
-    .padding()
-    .background(Theme.Color.Background.main.color)
   }
 }
 
 #Preview {
-  AppView()
+  AppView<AppReducer>()
 }

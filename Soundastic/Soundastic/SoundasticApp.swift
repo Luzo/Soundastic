@@ -6,13 +6,15 @@
 //
 
 import App
+import Resolver
 import SwiftUI
 
 @main
 struct SoundasticApp: App {
+
   var body: some Scene {
     WindowGroup {
-      AppView()
+      AppView<AppReducer>()
     }
   }
 }
