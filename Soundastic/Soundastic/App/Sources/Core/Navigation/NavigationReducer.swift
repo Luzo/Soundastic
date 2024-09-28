@@ -23,7 +23,6 @@ public extension NavigationReducerAction {
 public enum NavigationUseCase {
   case login
   case home
-  case player
 }
 
 extension NavigationReducer {
@@ -64,8 +63,6 @@ private extension NavigationUseCase {
       return []
     case .home:
       return []
-    case .player:
-      return [.home]
     }
   }
 }
