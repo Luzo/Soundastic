@@ -1,5 +1,4 @@
 import Foundation
-import Resolver
 
 public protocol SystemDependenciesProviderDefinition {
   var now: Date { get }
@@ -9,12 +8,4 @@ public protocol SystemDependenciesProviderDefinition {
 class SystemDependenciesProvider: SystemDependenciesProviderDefinition {
   var now: Date { Date() }
   var calendar: Calendar { Calendar.autoupdatingCurrent }
-}
-
-public extension Resolver {
-  static func registerCoreDependencies() {
-    register { SystemDependenciesProvider() }
-      .implements(SystemDependenciesProviderDefinition.self)
-      .scope(.container)
-  }
 }

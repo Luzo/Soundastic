@@ -10,16 +10,17 @@ public struct LoginView<Reducer: LoginReducerDefinition>: View {
 
   public var body: some View {
     VStack(alignment: .center) {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(Color.blue)
-      Text("Login!")
-      StylableButton(.constant(loginReducer.state.text), style: .main) {
-        loginReducer.changeText()
+      if !loginReducer.state.isLoading {
+        StylableButton(.constant("Login"), style: .main) {
+          loginReducer.login()
+        }
+      } else {
+        ProgressView()
       }
     }
     .padding()
     .background(Theme.Color.Background.main.color)
+    .navigationBarBackButtonHidden()
   }
 }
 

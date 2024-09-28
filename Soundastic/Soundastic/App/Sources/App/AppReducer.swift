@@ -1,4 +1,6 @@
 import Core
+import Combine
+import Login
 import Resolver
 import SwiftUI
 
@@ -7,56 +9,40 @@ public protocol AppReducerDefinition: AppReducerAction, ObservableObject {
 }
 
 public protocol AppReducerAction {
-  func checkLogin()
-  func logoutCalled()
+  func writeContents()
 }
 
 extension AppReducer {
-  enum Route {
-    case home
-    case login
+  public struct State: StateInitiable {
+    var isLoginPresented: Bool = false
+    var isHomePresented: Bool = false
+    var loadingText: String = ""
+
+    public init() {}
   }
 }
 
-extension AppReducer {
-  public struct State {
-    var timestampInit: Date
-    var isLoggedIn: Bool
+public class AppReducer: Reducer<AppReducer.State>, AppReducerDefinition {
+  @Injected var loginSharedStore: LoginSharedStoreDefinition
+  @Injected var navigationReducer: NavigationReducer
+  
+  public override func cancellablesToRegister() -> [AnyCancellable] {
+    let observeLogin = loginSharedStore.loggedIn
+      .combineLatest(loginSharedStore.isLoginInProgress)
+      .receive(on: DispatchQueue.main)
+      .delay(for: 3, scheduler: DispatchQueue.main)
+      .first()
+      .sink { [weak self] isLoggedIn, isLoginInProgress in
+        guard !isLoginInProgress else { return }
+        self?.navigationReducer.navigateTo(isLoggedIn ? .home : .login)
+      }
 
-    init(isLoggedIn: Bool) {
-      @Injected var systemDependenciesProvider: SystemDependenciesProviderDefinition
-      timestampInit = systemDependenciesProvider.now
-      self.isLoggedIn = isLoggedIn
-    }
-  }
-}
-
-public class AppReducer: AppReducerDefinition {
-  @Published public var state: State
-
-  init() {
-    self.state = .init(isLoggedIn: false)
-    checkLogin()
-  }
-}
-
-
-public extension AppReducer {
-  func checkLogin() {
-   let checkIfLoggedIn = Task {
-     let date = Date()
-     let secondsPassed = date.timeIntervalSince(state.timestampInit)
-     return secondsPassed > 5
-   }
-
-    Task { @MainActor [unowned self] in
-      self.state.isLoggedIn = await checkIfLoggedIn.value
-    }
+    return [
+      observeLogin
+    ]
   }
 
-  func logoutCalled() {
-    @Injected var systemDependenciesProvider: SystemDependenciesProviderDefinition
-    state.timestampInit = systemDependenciesProvider.now
-    state.isLoggedIn = false
+  public func writeContents() {
+    print(loginSharedStore.text)
   }
 }

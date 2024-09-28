@@ -1,3 +1,5 @@
+import Core
+import Resolver
 import SwiftUI
 
 public protocol LoginReducerDefinition: LoginReducerAction, ObservableObject {
@@ -5,33 +7,33 @@ public protocol LoginReducerDefinition: LoginReducerAction, ObservableObject {
 }
 
 public protocol LoginReducerAction {
-  func changeText()
+  func login()
 }
 
 extension LoginReducer {
-  public struct State {
-    var text: String
+  public struct State: StateInitiable {
+    var isLoading: Bool = false
 
-    init(text: String) {
-      self.text = text
-    }
+    public init() {}
   }
 }
 
-public class LoginReducer: LoginReducerDefinition {
-  @Published public var state: State
-
-  public init() {
-    self.state = .init(text: "Tap me")
-  }
+public class LoginReducer: Reducer<LoginReducer.State>, LoginReducerDefinition {
+  @Injected var loginSharedStore: LoginSharedStoreDefinition
+  @Injected var navigationReducer: NavigationReducer
 }
 
+@MainActor
 public extension LoginReducer {
-  func changeText() {
-    state.text = [
-      "abc",
-      "def",
-      "gh"
-    ].randomElement() ?? ""
+  func login() {
+    state.isLoading = true
+    Task {
+      try await Task.sleep(for: .seconds(3))
+
+      await MainActor.run {
+        state.isLoading = false
+        navigationReducer.navigateTo(.home)
+      }
+    }
   }
 }

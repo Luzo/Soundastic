@@ -1,3 +1,7 @@
+import Combine
+import Core
+import Login
+import Resolver
 import SwiftUI
 
 public protocol HomeReducerDefinition: HomeReducerAction, ObservableObject {
@@ -6,26 +10,28 @@ public protocol HomeReducerDefinition: HomeReducerAction, ObservableObject {
 
 public protocol HomeReducerAction {
   func changeText()
+  func logout()
 }
 
 extension HomeReducer {
-  public struct State {
-    var text: String
-
-    init(text: String) {
-      self.text = text
-    }
+  public struct State: StateInitiable {
+    var text: String = ""
+    public init() {}
   }
 }
 
-public class HomeReducer: HomeReducerDefinition {
-  @Published public var state: State
+public class HomeReducer: Reducer<HomeReducer.State>, HomeReducerDefinition {
+  @Injected var loginSharedStore: LoginSharedStoreDefinition
+  @Injected var navigationReducer: NavigationReducer
 
-  public init() {
-    self.state = .init(text: "Tap me")
+  public override init() {
+    super.init()
+
+    state.text = "CHANGE ME"
   }
 }
 
+@MainActor
 public extension HomeReducer {
   func changeText() {
     state.text = [
@@ -33,5 +39,11 @@ public extension HomeReducer {
       "def",
       "gh"
     ].randomElement() ?? ""
+  }
+
+  func logout() {
+    loginSharedStore.text = "efg"
+    ResolverScope.cached.reset()
+    navigationReducer.navigateTo(.login)
   }
 }

@@ -58,14 +58,17 @@ let package = Package(
       name: "Login",
       dependencies: [
         .product(name: "Theme", package: "Theme"),
-        .product(name: "Components", package: "Theme")
+        .product(name: "Components", package: "Theme"),
+        "Core"
       ]
     ),
     .target(
       name: "Home",
       dependencies: [
         .product(name: "Theme", package: "Theme"),
-        .product(name: "Components", package: "Theme")
+        .product(name: "Components", package: "Theme"),
+        "Core",
+        "Login"
       ]
     ),
   ]

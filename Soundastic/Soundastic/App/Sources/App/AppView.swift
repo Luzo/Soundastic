@@ -1,4 +1,5 @@
 import Components
+import Core
 import Home
 import Login
 import Resolver
@@ -7,25 +8,25 @@ import Theme
 
 public struct AppView<Reducer: AppReducerDefinition>: View {
   @InjectedObject var appReducer: Reducer
+  @InjectedObject var navigationReducer: NavigationReducer
 
   public init() {}
 
   public var body: some View {
-    NavigationStack {
+    NavigationStack(path: $navigationReducer.state.navPath) {
       ProgressView()
-        .navigationDestination(
-          isPresented: .constant(appReducer.state.isLoggedIn)
-        ) {
-          if appReducer.state.isLoggedIn {
+        .onAppear {
+          appReducer.writeContents()
+        }
+        .navigationDestination(for: NavigationUseCase.self) { destination in
+          switch destination {
+          case .home:
             HomeView<HomeReducer>()
-          } else {
+
+          case .login:
             LoginView<LoginReducer>()
           }
         }
-
-      Button("checkLogin") {
-        appReducer.checkLogin()
-      }
     }
   }
 }

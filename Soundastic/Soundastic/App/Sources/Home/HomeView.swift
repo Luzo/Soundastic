@@ -20,6 +20,9 @@ public struct HomeView<Reducer: HomeReducerDefinition>: View {
     }
     .padding()
     .background(Theme.Color.Background.main.color)
+    .backButton(.constant("Home")) {
+      homeReducer.logout()
+    }
   }
 }
 
