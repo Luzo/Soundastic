@@ -24,13 +24,12 @@ extension AppReducer {
 
 public class AppReducer: Reducer<AppReducer.State>, AppReducerDefinition {
   @Injected var loginSharedStore: LoginSharedStoreDefinition
-  @Injected var navigationReducer: NavigationReducer
+  @Injected var navigationReducer: NavigationReducer<AppNavigationUseCase>
   
   public override func cancellablesToRegister() -> [AnyCancellable] {
     let observeLogin = loginSharedStore.loggedIn
       .combineLatest(loginSharedStore.isLoginInProgress)
       .receive(on: DispatchQueue.main)
-      .delay(for: 3, scheduler: DispatchQueue.main)
       .first()
       .sink { [weak self] isLoggedIn, isLoginInProgress in
         guard !isLoginInProgress else { return }

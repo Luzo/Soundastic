@@ -5,8 +5,5 @@ public extension Resolver {
     register { SystemDependenciesProvider() }
       .implements(SystemDependenciesProviderDefinition.self)
       .scope(.container)
-
-    register { NavigationReducer() }
-      .scope(.container)
   }
 }

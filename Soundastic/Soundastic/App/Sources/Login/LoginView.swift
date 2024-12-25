@@ -12,7 +12,9 @@ public struct LoginView<Reducer: LoginReducerDefinition>: View {
     VStack(alignment: .center) {
       if !loginReducer.state.isLoading {
         StylableButton(.constant("Login"), style: .main) {
-          loginReducer.login()
+          Task {
+            await loginReducer.login()
+          }
         }
       } else {
         ProgressView()

@@ -7,7 +7,7 @@ public protocol LoginReducerDefinition: LoginReducerAction, ObservableObject {
 }
 
 public protocol LoginReducerAction {
-  func login()
+  func login() async
 }
 
 extension LoginReducer {
@@ -20,19 +20,19 @@ extension LoginReducer {
 
 public class LoginReducer: Reducer<LoginReducer.State>, LoginReducerDefinition {
   @Injected var loginSharedStore: LoginSharedStoreDefinition
-  @Injected var navigationReducer: NavigationReducer
+  @Injected var outboundNavigationReducer: LoginOutboundNavigationReducerDefinition
 }
 
 @MainActor
-public extension LoginReducer {
-  func login() {
+extension LoginReducer: LoginReducerAction {
+  public func login() async {
     state.isLoading = true
     Task {
-      try await Task.sleep(for: .seconds(3))
+      try await Task.sleep(for: .seconds(1))
 
       await MainActor.run {
         state.isLoading = false
-        navigationReducer.navigateTo(.home)
+        outboundNavigationReducer.navigateTo(.loginSuccess)
       }
     }
   }

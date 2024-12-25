@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "69E52BC7-6D10-4897-9840-7CE53CE0E6FE",
+      "name" : "Configuration",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "isRunningTests",
+        "value" : "false"
+      }
+    ]
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Soundastic.xcodeproj",
+        "identifier" : "E85C2B4B2C0B6F28009BD34C",
+        "name" : "SoundasticUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

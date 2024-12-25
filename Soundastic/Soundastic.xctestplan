@@ -1,0 +1,41 @@
+{
+  "configurations" : [
+    {
+      "id" : "1888D2F6-C3C5-4427-B519-D96CF46CB1B2",
+      "name" : "Configuration",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "isRunningTests",
+        "value" : "true"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Soundastic.xcodeproj",
+      "identifier" : "E85C2B312C0B6F26009BD34C",
+      "name" : "Soundastic"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Soundastic\/App",
+        "identifier" : "AppTests",
+        "name" : "AppTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Soundastic\/Theme",
+        "identifier" : "ThemeTests",
+        "name" : "ThemeTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -8,17 +8,17 @@ import Theme
 
 public struct AppView<Reducer: AppReducerDefinition>: View {
   @InjectedObject var appReducer: Reducer
-  @InjectedObject var navigationReducer: NavigationReducer
+  @InjectedObject var appNavigationReducer: NavigationReducer<AppNavigationUseCase>
 
   public init() {}
 
   public var body: some View {
-    NavigationStack(path: $navigationReducer.state.navPath) {
+    NavigationStack(path: $appNavigationReducer.state.navPath) {
       ProgressView()
         .onAppear {
           appReducer.writeContents()
         }
-        .navigationDestination(for: NavigationUseCase.self) { destination in
+        .navigationDestination(for: AppNavigationUseCase.self) { destination in
           switch destination {
           case .home:
             HomeView<HomeReducer>()

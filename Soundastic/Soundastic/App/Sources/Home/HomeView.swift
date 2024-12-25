@@ -9,19 +9,32 @@ public struct HomeView<Reducer: HomeReducerDefinition>: View {
   public init() {}
 
   public var body: some View {
-    VStack(alignment: .center) {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(Color.blue)
-      Text("Hello, world!")
-      StylableButton(.constant(homeReducer.state.text), style: .main) {
-        homeReducer.changeText()
+    VStack(alignment: .center, spacing: .Inset.section) {
+      VStack(spacing: .Inset.group) {
+        Rectangle()
+          .containerRelativeFrame([ .vertical]) { size, axis in
+            size * 0.3
+          }
+          .padding(.horizontal, .Inset.basic)
+          .background(.black)
+
+        Text("Hello, world!")
       }
+
+      RelativeWidthStylableButton(.constant(homeReducer.state.buttonText), style: .main) {
+        Task {
+          await homeReducer.stopOrPlay()
+        }
+      }
+
+      Spacer()
     }
     .padding()
     .background(Theme.Color.Background.main.color)
-    .backButton(.constant("Home")) {
-      homeReducer.logout()
+    .backButton(.constant("Logout")) {
+      Task {
+        await homeReducer.logout()
+      }
     }
   }
 }

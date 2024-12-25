@@ -9,41 +9,43 @@ public protocol HomeReducerDefinition: HomeReducerAction, ObservableObject {
 }
 
 public protocol HomeReducerAction {
-  func changeText()
-  func logout()
+  func stopOrPlay() async
+  func logout() async
 }
 
 extension HomeReducer {
   public struct State: StateInitiable {
-    var text: String = ""
+    var isPlaying: Bool = false
+    var nowPlayingText: String = ""
+    var buttonText: String = ""
+    var selectedSong: String? = ""
+
     public init() {}
   }
 }
 
 public class HomeReducer: Reducer<HomeReducer.State>, HomeReducerDefinition {
   @Injected var loginSharedStore: LoginSharedStoreDefinition
-  @Injected var navigationReducer: NavigationReducer
+  @Injected var outboundNavigationReducer: HomeOutboundNavigationReducerDefinition
 
   public override init() {
     super.init()
 
-    state.text = "CHANGE ME"
+    state.buttonText = "Play"
+    state.nowPlayingText = state.selectedSong.unwrapToString(or: "Please select song") { "Now playing: \($0)" }
   }
 }
 
 @MainActor
-public extension HomeReducer {
-  func changeText() {
-    state.text = [
-      "abc",
-      "def",
-      "gh"
-    ].randomElement() ?? ""
+extension HomeReducer: HomeReducerAction {
+  public func stopOrPlay() async {
+    state.isPlaying.toggle()
+    state.buttonText = state.isPlaying ? "Stop" : "Play"
   }
 
-  func logout() {
+  public func logout() async {
     loginSharedStore.text = "efg"
     ResolverScope.cached.reset()
-    navigationReducer.navigateTo(.login)
+    outboundNavigationReducer.navigateTo(.logout)
   }
 }
